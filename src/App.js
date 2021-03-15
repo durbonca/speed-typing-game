@@ -1,19 +1,23 @@
-/**
- * Challenge: Using hooks, track the state of the text in the textarea on every keystroke
- * To verify it's working, you could just console.log the state on every change
- * 
- * https://scrimba.com/p/p7P5Hd/cW8Jdfy
- */
-
 import {useState} from 'react'
 
 export function App(){
 
-  const [inputTextArea, setInputTextArea] = useState()
+  const [inputTextArea, setInputTextArea] = useState('')
+  const [count, setCount] = useState (0)
+  const [time, setTime] = useState(0)
 
   function handleChange(event){
-    let inputValue = event.target.value
+    const inputValue = event.target.value
     setInputTextArea( inputValue )
+  }
+
+  function countWords(inputTextArea){
+    if(inputTextArea.match(/\S+/g)){
+      let numberOfWords = inputTextArea.match(/\S+/g).length
+      setCount(numberOfWords)
+    }else(
+      setCount(0)
+    )
   }
 
   return(
@@ -27,10 +31,10 @@ export function App(){
         value={ inputTextArea }
         />
       <h4>
-          Time Remaining: ???
+          Time Remaining: {time}
       </h4>
-      <button>Start</button>
-      <h1>Word Count: ???</h1>
+      <button onClick={()=>countWords(inputTextArea)}>Start</button>
+      <h1>Word Count: {count}</h1>
     </div>
   )
 }
