@@ -1,10 +1,10 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 
 export function App(){
 
   const [inputTextArea, setInputTextArea] = useState('')
   const [count, setCount] = useState (0)
-  const [time, setTime] = useState(0)
+  const [time, setTime] = useState(10)
 
   function handleChange(event){
     const inputValue = event.target.value
@@ -19,6 +19,13 @@ export function App(){
       setCount(0)
     )
   }
+
+  useEffect(()=>{
+    if(time){
+    setTimeout(()=>{
+      setTime(prev=> prev-1 )
+    },1000)}
+  },[time])
 
   return(
     <div>
