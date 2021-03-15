@@ -14,16 +14,16 @@
 export function App(){
 
   return(
-    <>
+    <div>
       <h1>
-          Title
+          How Fast Do You Type?
       </h1>
       <textarea />
       <h4>
-          time remaining
+          Time Remaining: ???
       </h4>
       <button>Start</button>
-      <h1>word count</h1>
-    </>
+      <h1>Word Count: ???</h1>
+    </div>
   )
 }
