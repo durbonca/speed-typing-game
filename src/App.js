@@ -1,24 +1,31 @@
 /**
- * Challenge: build the basic structure of our game
+ * Challenge: Using hooks, track the state of the text in the textarea on every keystroke
+ * To verify it's working, you could just console.log the state on every change
  * 
- * 1. <h1> title at the top
- * 2. <textarea> for the box to type in 
- *      (tip: React normalizes <textarea /> to be more like <input />, 
- *      so it can be used as a self-closing element and uses the `value` property
- *      to set its contents)
- * 3. <h4> ti display the amount of time remaining
- * 4. <button> to start the game
- * 5. Another <h1> to display the word count
+ * https://scrimba.com/p/p7P5Hd/cW8Jdfy
  */
 
+import {useState} from 'react'
+
 export function App(){
+
+  const [inputTextArea, setInputTextArea] = useState()
+
+  function handleChange(event){
+    let inputValue = event.target.value
+    setInputTextArea( inputValue )
+  }
 
   return(
     <div>
       <h1>
           How Fast Do You Type?
       </h1>
-      <textarea />
+      <textarea 
+        name="input"
+        onChange={handleChange} 
+        value={ inputTextArea }
+        />
       <h4>
           Time Remaining: ???
       </h4>
