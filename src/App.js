@@ -5,6 +5,7 @@ export function App(){
   const [inputTextArea, setInputTextArea] = useState('')
   const [count, setCount] = useState (0)
   const [time, setTime] = useState(10)
+  const [start, setStart] = useState(false)
 
   function handleChange(event){
     const inputValue = event.target.value
@@ -20,12 +21,23 @@ export function App(){
     )
   }
 
+  function handleStart(){
+      if(!start){
+        setTime(60)
+        setStart(true)
+      }
+  }
+
   useEffect(()=>{
-    if(time){
+    if(time && start){
     setTimeout(()=>{
       setTime(prev=> prev-1 )
-    },1000)}
-  },[time])
+    }
+    ,1000) }else{
+      setStart(false)
+      countWords(inputTextArea)
+    }
+  },[time, start])
 
   return(
     <div>
@@ -40,7 +52,7 @@ export function App(){
       <h4>
           Time Remaining: {time}
       </h4>
-      <button onClick={()=>countWords(inputTextArea)}>Start</button>
+      <button onClick={handleStart}>Start</button>
       <h1>Word Count: {count}</h1>
     </div>
   )
