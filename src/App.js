@@ -1,53 +1,8 @@
-import {useEffect, useState} from 'react'
+import useWordGame from './hooks/useWordGame'
 
 export function App(){
 
-  const STARTING_TIME = 60
-  const [inputTextArea, setInputTextArea] = useState('')
-  const [count, setCount] = useState (0)
-  const [time, setTime] = useState(STARTING_TIME)
-  const [start, setStart] = useState(false)
-
-  function handleChange(event){
-    const inputValue = event.target.value
-    setInputTextArea( inputValue )
-  }
-
-  function countWords(inputTextArea){
-    if(inputTextArea.match(/\S+/g)){
-      let numberOfWords = inputTextArea.match(/\S+/g).length
-      setCount(numberOfWords)
-    }else(
-      setCount(0)
-    )
-  }
-
-  function handleStop(){
-    if(start){
-      countWords(inputTextArea)
-    }
-      setStart(false)
-  }
-
-  function handleStart(){
-      if(!start){
-        document.getElementById('input').focus()
-        setTime(STARTING_TIME)
-        setInputTextArea('')
-        setStart(true)
-      }
-  }
-
-  useEffect(()=>{
-    if(time && start){
-    setTimeout(()=>{
-      setTime(prev=> prev-1 )
-    }
-    ,1000) }else{
-      setStart(false)
-      countWords(inputTextArea)
-    }
-  },[time, start])
+  const {inputRef, handleChange, inputTextArea, time, handleStart, handleStop, count, start} = useWordGame()
 
   return(
     <div>
@@ -55,16 +10,18 @@ export function App(){
           How Fast Do You Type?
       </h1>
       <textarea 
-        id="input"
+        style={{caretColor:'red'}}
+        ref={inputRef}
+        disabled={!start}
         name="input"
-        onChange={handleChange} 
+        onChange={handleChange}
         value={ inputTextArea }
         />
       <h4>
           Time Remaining: {time}
       </h4>
       <div style={{display: 'flex'}}>
-        <button onClick={handleStart}>Start</button>
+        <button onClick={handleStart} disabled={start}>Start</button>
         <button onClick={handleStop}>Stop</button>
       </div>
       <h1>Word Count: {count}</h1>
